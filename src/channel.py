@@ -20,6 +20,7 @@ class Channel:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self.__channel_id = channel_id
         self.channel = self.__youtube.channels().list(id =self.__channel_id, part ='snippet,statistics').execute()
+        self.subscriber_count = int(self.channel['items'][0]['statistics']['subscriberCount'])
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
@@ -50,4 +51,12 @@ class Channel:
     def get_service(cls):
         return cls.__youtube
 
+    def __str__(self):
+        return f"{self.title}, {self.url}"
+
+    def __add__(self, other):
+        if isinstance(other, Channel):
+            return int(self.subscriber_count) + int(other.subscriber_count)
+        else:
+            raise TypeError("Неподдерживаемый тип операнда для +: 'Channel' и {}".format(type(other)))
 
