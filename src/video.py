@@ -7,7 +7,7 @@ class Video:
 
         self.channel_id = channel_id
         self.youtube = youtube
-        self.channel = self.youtube.channels().list(id=channel_id, part='snippet,statistics').execute()
+        self.channel = self.youtube.videos().list(id=channel_id, part='snippet,statistics').execute()
         self.title = self.channel['items'][0]['snippet']['title']
         self.video_count = int(self.channel['items'][0]['statistics']['videoCount'])
         self.view_count = int(self.channel['items'][0]['statistics']['viewCount'])
